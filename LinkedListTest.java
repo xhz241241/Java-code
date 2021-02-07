@@ -1,3 +1,6 @@
+import java.awt.*;
+import java.util.LinkedList;
+
 public class LinkedListTest {
 
     private static Node arrayToLinkedList(int[] arr) {
@@ -78,6 +81,87 @@ public class LinkedListTest {
         return newHead;
     }
 
+    private static Node middleNode(Node head) {
+        if(head == null){
+            return null;
+        }
+        if(head.next == null){
+            return head;
+        }
+        int size = 0;
+        Node cur = head;
+        for(; cur != null; cur = cur.next){
+            size++;
+        }
+        //先找到待寻找的是链表的的几个节点
+        int mid = (size / 2) + 1;
+        Node newHead = head;
+        //寻找第mid个节点
+        for(int i = 1; i < mid; i++){
+            newHead = newHead.next;
+        }
+        return newHead;
+    }
+
+    private static Node FindKthToTail(Node head, int i) {
+        if(head == null){
+            return null;
+        }
+        if(head.next == null){
+            return head;
+        }
+        int size = 0;
+        Node cur = head;
+        while(cur != null){
+            size++;
+            cur = cur.next;
+        }
+        cur = head;
+        for(int j = 1; j < size - i + 1; j++){
+            cur = cur.next;
+        }
+        Node newHead = new Node(cur.val);
+        return newHead;
+    }
+
+    private static Node mergeTwoLists(Node head1, Node head2) {
+        Node pre = new Node(0);
+        Node cur = new Node(0);
+        pre = cur;
+        if(head1 == null){
+            return head2;
+        }
+        if(head2 == null){
+            return head1;
+        }
+        //处理一般情况
+        while(head1 != null && head2 != null){
+            //先把较小者放到新链表中
+            if(head2.val > head1.val){
+                cur.next = head1;
+                head1 = head1.next;
+            }
+            else{
+                cur.next = head2;
+                head2 = head2.next;
+            }
+            cur = cur.next;
+        }
+        while(head1 == null && head2 != null){
+            ///把head2剩下的节点全部尾插到新链表后面
+            cur.next = head2;
+            head2 = head2.next;
+            cur = cur.next;
+        }
+        while(head1 != null && head2 == null){
+            ///把head1剩下的节点全部尾插到新链表后面
+            cur.next = head1;
+            head1 = head1.next;
+            cur = cur.next;
+        }
+        return pre.next;
+    }
+
     private static void my_print(Node head) {
         for(Node cur = head; cur != null; cur = cur.next){
             System.out.println(cur.val);
@@ -99,6 +183,24 @@ public class LinkedListTest {
 //        Node head = MyLinkedListDelete.createList();
 //        Node newHead = reverseList(head);
 //        my_print(newHead);
-    }
 
+        // 4. 给定一个头结点为 head 的非空单链表，返回链表的中间结点。
+        //    如果有两个中间结点，则返回第二个中间结点。
+//        Node head = MyLinkedListDelete.createList();
+//        Node newHead = middleNode(head);
+//        my_print(newHead);
+
+        // 5. 输入一个链表，输出该链表中倒数第k个结点。
+//        Node head = MyLinkedListDelete.createList();
+//        Node newNode = FindKthToTail(head, 2);
+//        System.out.println(newNode);
+
+        // 6. 将两个升序链表合并为一个新的 升序 链表并返回。
+        //    新链表是通过拼接给定的两个链表的所有节点组成的。
+//        Node head1 = MyLinkedListDelete.createList();
+//        Node head2 = MyLinkedListDelete.createList2();
+//        Node newHead = mergeTwoLists(head1, head2);
+//        my_print(newHead);
+
+    }
 }
