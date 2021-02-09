@@ -162,6 +162,59 @@ public class LinkedListTest {
         return pre.next;
     }
 
+    public static Node partition(Node pHead, int x) {
+        if(pHead == null || pHead.next == null){
+            return pHead;
+        }
+        //创建一个小链表一个大链表(都带有傀儡节点)
+        Node sCur = new Node(0);
+        Node bCur = new Node(0);
+        Node cur = pHead;
+        Node smaller = sCur;
+        Node bigger = bCur;
+        while(cur != null){
+            if(cur.val < x){
+                //往小链表里面添加元素
+                smaller.next = cur;
+                smaller = smaller.next;
+            }else{
+                //往大链表里添加元素
+                bigger.next = cur;
+                bigger = bigger.next;
+            }
+            cur = cur.next;
+        }
+        //把小链表的尾节点设成大连表的头结点
+        //把大链表的尾结点设成null
+        bigger.next = null;
+        smaller.next = bCur.next;
+        //并返回小链表的头结点
+        return sCur.next;
+    }
+
+    private static Node deleteDuplication(Node pHead) {
+        if(pHead == null || pHead.next == null){
+            return pHead;
+        }
+        Node newHead = new Node(-1);
+        newHead.next = pHead;
+        Node pre = newHead;
+        Node cur = pHead;
+        while(cur != null && cur.next != null){
+            if(cur.val == cur.next.val){
+                while(cur.next != null && cur.val == cur.next.val){
+                    cur = cur.next;
+                }
+                cur = cur.next;
+                pre.next = cur;
+            }else{
+                pre = cur;
+                cur = cur.next;
+            }
+        }
+        return newHead.next;
+    }
+
     private static void my_print(Node head) {
         for(Node cur = head; cur != null; cur = cur.next){
             System.out.println(cur.val);
@@ -202,5 +255,19 @@ public class LinkedListTest {
 //        Node newHead = mergeTwoLists(head1, head2);
 //        my_print(newHead);
 
+        // 7.现有一链表的头指针 ListNode* pHead，给一定值x，
+        //  编写一段代码将所有小于x的结点排在其余结点之前，
+        //  且不能改变原来的数据顺序，返回重新排列后的链表的头指针。
+//        Node pHead = MyLinkedListDelete.createList();
+//        Node newHead = partition(pHead, 2);
+//        my_print(newHead);
+
+        // 8.在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，
+        // 重复的结点不保留，返回链表头指针。
+        // 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+//        Node head = MyLinkedListDelete.createList();
+//        my_print(deleteDuplication(head));
     }
+
+
 }
