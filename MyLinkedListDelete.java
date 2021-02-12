@@ -2,14 +2,28 @@
 public class MyLinkedListDelete {
     //创建一个不带傀儡节点的链表
     public static Node createList() {
-        Node a = new Node(1);
+        Node a = new Node(7);
         Node b = new Node(2);
-        Node c = new Node(3);
-        Node d = new Node(4);
+        Node c = new Node(4);
+        Node d = new Node(3);
+        Node e = new Node(1);
+        Node f = new Node(1);
         a.next = b;
         b.next = c;
         c.next = d;
-        d.next = null;
+        d.next = e;
+        e.next = f;
+        f.next = null;
+        return a;
+    }
+
+    public static Node createList2() {
+        Node a = new Node(1);
+        Node b = new Node(3);
+        Node c = new Node(4);
+        a.next = b;
+        b.next = c;
+        c.next = null;
         return a;
     }
 
@@ -152,9 +166,9 @@ public class MyLinkedListDelete {
     }
 
     public static void main(String[] args) {
-        Node head = createList();
+//        Node head = createList();
 
-        //不带傀儡节点, 往链表中间插入元素
+        //不带傀儡节点, 往链表1, 2中间插入元素
 //        Node newNode = new Node(999);//待插入的元素
 //        Node pre = head;
 //        newNode.next = pre.next;
@@ -188,8 +202,8 @@ public class MyLinkedListDelete {
 //        my_print(head);
 
         //不带傀儡节点, 删除末尾元素
-        removeTail(head);
-        my_print(head);
+//        removeTail(head);
+//        my_print(head);
 
         //带傀儡节点, 往链表头部插入元素
 //        Node head = createListWithDummy();
