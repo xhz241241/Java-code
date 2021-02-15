@@ -9,16 +9,16 @@ public class LinkedListTest {
         Node head = null;
         Node tail = null;
         //通过for each依次把节点尾插到链表中
-        for(int x : arr){
+        for (int x : arr) {
             Node newNode = new Node(x);
             //初始都为null的情况下, head和tail应该都指向同一个节点
             if (head == null) {
                 head = newNode;
                 tail = newNode;
-            }else{
+            } else {
                 //每次插入完毕后都要把tail更新
-             tail.next = newNode;
-             tail = tail.next;
+                tail.next = newNode;
+                tail = tail.next;
             }
         }
         return head;
@@ -26,7 +26,7 @@ public class LinkedListTest {
 
     private static Node removeElements(Node head, int val) {
         //判断为空链表的请况
-        if(head == null){
+        if (head == null) {
             return null;
         }
         //一般情况
@@ -35,19 +35,19 @@ public class LinkedListTest {
         //所以要先处理一般情况, 后处理头结点
         Node pre = head;
         Node cur = head.next;
-        while(cur != null){
-            if(cur.val == val){
+        while (cur != null) {
+            if (cur.val == val) {
                 //找到了, 开始删除元素
                 pre.next = cur.next;
                 cur = pre.next;
-            }else{
+            } else {
                 //没有找到, 更新 pre 的值和 cur 的值
                 pre = pre.next;
                 cur = cur.next;
             }
         }
         //判断链表头结点为要删除的元素的情况
-        if(head.val== val){
+        if (head.val == val) {
             head = head.next;
         }
         return head;
@@ -55,20 +55,20 @@ public class LinkedListTest {
 
     private static Node reverseList(Node head) {
         //判断空链表
-        if(head == null){
+        if (head == null) {
             return null;
         }
         //判断链表只有一个元素
-        if(head.next == null){
+        if (head.next == null) {
             return head;
         }
         //处理一般情况
         Node newHead = null;
         Node preNode = null;
         Node curNode = head;
-        while(curNode != null){
+        while (curNode != null) {
             Node nextNode = curNode.next;
-            if(nextNode == null){
+            if (nextNode == null) {
                 //此时已经到达末尾
                 newHead = curNode;
             }
@@ -82,42 +82,42 @@ public class LinkedListTest {
     }
 
     private static Node middleNode(Node head) {
-        if(head == null){
+        if (head == null) {
             return null;
         }
-        if(head.next == null){
+        if (head.next == null) {
             return head;
         }
         int size = 0;
         Node cur = head;
-        for(; cur != null; cur = cur.next){
+        for (; cur != null; cur = cur.next) {
             size++;
         }
         //先找到待寻找的是链表的的几个节点
         int mid = (size / 2) + 1;
         Node newHead = head;
         //寻找第mid个节点
-        for(int i = 1; i < mid; i++){
+        for (int i = 1; i < mid; i++) {
             newHead = newHead.next;
         }
         return newHead;
     }
 
     private static Node FindKthToTail(Node head, int i) {
-        if(head == null){
+        if (head == null) {
             return null;
         }
-        if(head.next == null){
+        if (head.next == null) {
             return head;
         }
         int size = 0;
         Node cur = head;
-        while(cur != null){
+        while (cur != null) {
             size++;
             cur = cur.next;
         }
         cur = head;
-        for(int j = 1; j < size - i + 1; j++){
+        for (int j = 1; j < size - i + 1; j++) {
             cur = cur.next;
         }
         Node newHead = new Node(cur.val);
@@ -128,32 +128,31 @@ public class LinkedListTest {
         Node pre = new Node(0);
         Node cur = new Node(0);
         pre = cur;
-        if(head1 == null){
+        if (head1 == null) {
             return head2;
         }
-        if(head2 == null){
+        if (head2 == null) {
             return head1;
         }
         //处理一般情况
-        while(head1 != null && head2 != null){
+        while (head1 != null && head2 != null) {
             //先把较小者放到新链表中
-            if(head2.val > head1.val){
+            if (head2.val > head1.val) {
                 cur.next = head1;
                 head1 = head1.next;
-            }
-            else{
+            } else {
                 cur.next = head2;
                 head2 = head2.next;
             }
             cur = cur.next;
         }
-        while(head1 == null && head2 != null){
+        while (head1 == null && head2 != null) {
             ///把head2剩下的节点全部尾插到新链表后面
             cur.next = head2;
             head2 = head2.next;
             cur = cur.next;
         }
-        while(head1 != null && head2 == null){
+        while (head1 != null && head2 == null) {
             ///把head1剩下的节点全部尾插到新链表后面
             cur.next = head1;
             head1 = head1.next;
@@ -163,7 +162,7 @@ public class LinkedListTest {
     }
 
     public static Node partition(Node pHead, int x) {
-        if(pHead == null || pHead.next == null){
+        if (pHead == null || pHead.next == null) {
             return pHead;
         }
         //创建一个小链表一个大链表(都带有傀儡节点)
@@ -172,12 +171,12 @@ public class LinkedListTest {
         Node cur = pHead;
         Node smaller = sCur;
         Node bigger = bCur;
-        while(cur != null){
-            if(cur.val < x){
+        while (cur != null) {
+            if (cur.val < x) {
                 //往小链表里面添加元素
                 smaller.next = cur;
                 smaller = smaller.next;
-            }else{
+            } else {
                 //往大链表里添加元素
                 bigger.next = cur;
                 bigger = bigger.next;
@@ -193,21 +192,21 @@ public class LinkedListTest {
     }
 
     private static Node deleteDuplication(Node pHead) {
-        if(pHead == null || pHead.next == null){
+        if (pHead == null || pHead.next == null) {
             return pHead;
         }
         Node newHead = new Node(-1);
         newHead.next = pHead;
         Node pre = newHead;
         Node cur = pHead;
-        while(cur != null && cur.next != null){
-            if(cur.val == cur.next.val){
-                while(cur.next != null && cur.val == cur.next.val){
+        while (cur != null && cur.next != null) {
+            if (cur.val == cur.next.val) {
+                while (cur.next != null && cur.val == cur.next.val) {
                     cur = cur.next;
                 }
                 cur = cur.next;
                 pre.next = cur;
-            }else{
+            } else {
                 pre = cur;
                 cur = cur.next;
             }
@@ -215,8 +214,95 @@ public class LinkedListTest {
         return newHead.next;
     }
 
+    private static boolean chkPalindrome(Node A) {
+        if(A == null || A.next == null){
+            return true;
+        }
+        //定义快慢指针
+        Node fast = A;
+        Node slow = A;
+        while(fast != null && fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //此时慢指针指向的就是链表中间节点
+        //反转以中间节点为头结点的链表
+        Node reversed = reverse(slow);
+
+        //判断反转后的链表是否和原链表前半部分相等
+        while(A != null && reversed != null){
+            if(A.val != reversed.val){
+                return false;
+            }else{
+                A = A.next;
+                reversed = reversed.next;
+            }
+        }
+        return true;
+    }
+
+    public static Node reverse(Node slow){
+        if(slow == null || slow.next == null){
+            return slow;
+        }
+        Node newHead = null;
+        Node cur = slow;
+        Node pre = null;
+        while(cur != null){
+            Node nextNode = cur.next;
+            if(nextNode == null){
+                newHead = cur;
+            }
+            cur.next = pre;
+            pre = cur;
+            cur = nextNode;
+
+        }
+        return newHead;
+    }
+
+    private static Node getIntersectionNode(Node headA, Node headB) {
+        if(headA == null || headB == null){
+            return null;
+        }
+        Node cur1 = headA;
+        Node cur2 = headB;
+        while(cur1 != cur2){
+//            if(cur1 == null){
+//                cur1 = headB;
+//            }else{
+//                cur1 = cur1.next;
+//            }
+//            if(cur2 == null){
+//                cur2 = headA;
+//            }else{
+//                cur2 = cur2.next;
+//            }
+            cur1 = cur1 == null ? headB : cur1.next;
+            cur2 = cur2 == null ? headA : cur2.next;
+            //三目运算符的时间复杂度比if语句低的多
+        }
+        return cur1;
+    }
+
+    private static boolean hasCycle(Node head) {
+        if(head == null || head.next == null){
+            return  false;
+        }
+        Node fast = head;
+        Node slow = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static void my_print(Node head) {
-        for(Node cur = head; cur != null; cur = cur.next){
+        for (Node cur = head; cur != null; cur = cur.next) {
             System.out.println(cur.val);
         }
     }
@@ -267,7 +353,18 @@ public class LinkedListTest {
         // 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
 //        Node head = MyLinkedListDelete.createList();
 //        my_print(deleteDuplication(head));
+
+        // 9. 判断其是否为回文结构
+//        Node head = MyLinkedListDelete.createList();
+//        System.out.println(chkPalindrome(head));
+
+        // 10. 找到两个单链表相交的起始节点。
+//        Node headA = MyLinkedListDelete.createList();
+//        Node headB = MyLinkedListDelete.createList2();
+//        System.out.println(getIntersectionNode(headA, headB));
+
+        // 11. 给定一个链表，判断链表中是否有环。
+//        Node head = MyLinkedListDelete.createList();
+//        hasCycle(head);
     }
-
-
 }
