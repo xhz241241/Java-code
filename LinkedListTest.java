@@ -104,30 +104,28 @@ public class LinkedListTest {
     }
 
     private static Node FindKthToTail(Node head, int i) {
-        if (head == null) {
-            return null;
-        }
-        if (head.next == null) {
-            return head;
-        }
         int size = 0;
         Node cur = head;
         while (cur != null) {
             size++;
             cur = cur.next;
         }
+        if (i < 0 || i > size){
+            return null;
+        }
+        if (head == null) {
+            return null;
+        }
         cur = head;
         for (int j = 1; j < size - i + 1; j++) {
             cur = cur.next;
         }
-        Node newHead = new Node(cur.val);
-        return newHead;
+        return cur;
     }
 
     private static Node mergeTwoLists(Node head1, Node head2) {
         Node pre = new Node(0);
-        Node cur = new Node(0);
-        pre = cur;
+        Node cur = pre;
         if (head1 == null) {
             return head2;
         }
@@ -146,17 +144,12 @@ public class LinkedListTest {
             }
             cur = cur.next;
         }
-        while (head1 == null && head2 != null) {
+        if (head2 != null) {
             ///把head2剩下的节点全部尾插到新链表后面
             cur.next = head2;
-            head2 = head2.next;
-            cur = cur.next;
-        }
-        while (head1 != null && head2 == null) {
+        } else{
             ///把head1剩下的节点全部尾插到新链表后面
             cur.next = head1;
-            head1 = head1.next;
-            cur = cur.next;
         }
         return pre.next;
     }
@@ -174,11 +167,11 @@ public class LinkedListTest {
         while (cur != null) {
             if (cur.val < x) {
                 //往小链表里面添加元素
-                smaller.next = cur;
+                smaller.next = new Node(cur.val);
                 smaller = smaller.next;
             } else {
                 //往大链表里添加元素
-                bigger.next = cur;
+                bigger.next = new Node(cur.val);
                 bigger = bigger.next;
             }
             cur = cur.next;
