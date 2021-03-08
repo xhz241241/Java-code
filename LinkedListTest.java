@@ -294,6 +294,37 @@ public class LinkedListTest {
         return false;
     }
 
+    private static Node detectCycle(Node head) {
+        //核心算法就是分别从链表头结点开始到入环扣 和 在环内相遇的节点开始到入环口的距离相等
+        //0. 判断特殊情况
+        if(head == null || head.next == null){
+            return null;
+        }
+        //1. 创建快慢指针
+        Node fast = head;
+        Node slow = head;
+        //2. 快指针一次走两步慢指针一次走一步 记录两者相遇的点meet
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){
+                break;
+            }
+        }
+        //3.判断链表是否不带环
+        if(fast == null || fast .next == null){
+            return null;
+        }
+        //4. 分别从链表头结点和meet开始一起走相同步数, 两者相遇的点就是带环链表的入环口
+        Node cur = head;
+        Node meet = fast;
+        while(cur != meet){
+            cur = cur.next;
+            meet = meet.next;
+        }
+        return cur;
+    }
+
     private static void my_print(Node head) {
         for (Node cur = head; cur != null; cur = cur.next) {
             System.out.println(cur.val);
@@ -359,5 +390,11 @@ public class LinkedListTest {
         // 11. 给定一个链表，判断链表中是否有环。
 //        Node head = MyLinkedListDelete.createList();
 //        hasCycle(head);
+
+        // 12. 给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+//        Node head = MyLinkedListDelete.createList();
+//        detectCycle(head);
     }
+
+
 }
