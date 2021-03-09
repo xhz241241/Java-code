@@ -1,4 +1,4 @@
-//public class MyLinkedList {
+//public class MyLinkedListTraversal {
 //    private static Node creatList() {
 //        Node a = new Node(1);
 //        Node b = new Node(2);
