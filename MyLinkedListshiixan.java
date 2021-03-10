@@ -9,13 +9,13 @@ class TwoNode{
     }
 }
 
-public class MyLinkedList {
+class MyLinkedListshixian {
     //双向链表需要记录收尾两个节点
     private TwoNode head;
     private TwoNode tail;
     private int length = 0;
 
-    public MyLinkedList(){
+    public MyLinkedListshixian(){
         head = null;
         tail = null;
     }
