@@ -2,7 +2,9 @@ package Tree;
 
 import com.sun.source.tree.Tree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 class TreeNode{
@@ -191,9 +193,114 @@ public class BinaryTreeTest {
         return true;
     }
 
+    // 7. 已知先序遍历结果(包含空格), 求该树的中序遍历结果
+    public static int index = 0;
+    public static TreeNode build(String line){
+        int index = 0;
+        return build2(line);
+    }
+
+    public static TreeNode build2(String line){
+        char ch = line.charAt(index);
+        //将第index个字符判空, 不为空的话就放到root上,
+        //然后继续判断它的left和right
+        if(ch == '#'){
+            return null;
+        }
+        TreeNode root = new TreeNode(ch);
+        index++;
+        root.left = build2(line);
+        index++;
+        root.right = build2(line);
+        return root;
+    }
+
+    // 8. 二叉树的分层遍
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        // 先创建一个空的二维链表
+        List<List<Integer>> res = new ArrayList<>();
+        // 0. 判断特殊情况
+        if(root == null){
+            return res;
+        }
+        // 1. 创建队列, 和层序遍历差不多
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        // 2. 先计算当前queue中有多少元素, 并依次放到一个新的一维链表中
+        // 3. 将当前队首元素的左子树和右子树分别入队
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            List<Integer> tem = new LinkedList<>();
+            for(int i = 0; i < size; i++){
+                TreeNode cur = queue.poll();
+                tem.add(cur.val);
+                if(cur.left != null){
+                    queue.offer(cur.left);
+                }
+                if(cur.right != null){
+                    queue.offer(cur.right);
+                }
+            }
+            res.add(tem);
+        }
+        return res;
+    }
+
+    // 9. 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
+    public static TreeNode lca = null;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null){
+            return null;
+        }
+        find(root, p, q);
+        return lca;
+    }
+    public static boolean find(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null){
+            return false;
+        }
+        int mid = (p == root || q == root) ? 1 : 0;
+        int left = find(root.left, p, q) ? 1 : 0;
+        int right = find(root.right, p, q) ? 1 : 0;
+        if(mid + left + right == 2){
+            lca = root;
+        }
+        return (mid + left + right > 0);
+    }
+
+    // 10. 二叉搜索树转换成一个排序的双向链表
+    public TreeNode Convert(TreeNode pRootOfTree) {
+        // 主要思想是通过中序遍历来转换
+        // 0. 判断特殊情况
+        if(pRootOfTree == null){
+            return null;
+        }
+        if(pRootOfTree.left == null && pRootOfTree.right == null){
+            return pRootOfTree;
+        }
+        // 1. 先将左子树转为一个双向链表, 再把当前节点尾插到左子树的链表后
+        TreeNode leftHead = Convert(pRootOfTree.left);
+        TreeNode leftTail = leftHead;
+        while(leftTail != null && leftTail.right != null){
+            leftTail = leftTail.right;
+        }
+        if(leftHead != null){
+            leftTail.right = pRootOfTree;
+            pRootOfTree.left = leftTail;
+        }
+        // 2. 再将右子树转为一个双向链表, 再把当前节点头插到右子树的前面
+        TreeNode rightHead = Convert(pRootOfTree.right);
+        if(rightHead != null){
+            pRootOfTree.right = rightHead;
+            rightHead.left = pRootOfTree;
+        }
+        return (leftHead == null) ? pRootOfTree : leftHead;
+    }
+
+
     public static void main(String[] args) {
         TreeNode root = setTree();
 //        levelOrder(root);
-        System.out.println(isCompleteTree(root));
+//        System.out.println(isCompleteTree(root));
     }
 }
