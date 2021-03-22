@@ -2,10 +2,7 @@ package Tree;
 
 import com.sun.source.tree.Tree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 class TreeNode{
     int val;
@@ -297,6 +294,158 @@ public class BinaryTreeTest {
         return (leftHead == null) ? pRootOfTree : leftHead;
     }
 
+    // 11. 根据一棵树的前序遍历与中序遍历构造二叉树。
+    public int index2 = 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // 0. 需要创建一个全局变量index, 并在方法一进来就初始化index为0
+        // 保证每次用例之间互不影响
+        index2 = 0;
+        // 1. 将中序遍历结果转换成一个list 这样方便从中间截取某一段
+        List<Integer> inorderList = new ArrayList<>();
+        for(int x : inorder){
+            inorderList.add(x);
+        }
+        return buildTree2(preorder, inorderList);
+    }
+    public TreeNode buildTree2(int[] preorder, List<Integer> inorderList){
+        // 2. 接下来用先序遍历的框架分别设置根节点和左右子树的值
+        if(inorderList.isEmpty()){
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[index2]);
+        index2++;
+        // 3. 记录下root在中序遍历中的下标, 从该下标切分整个中序遍历结果
+        int pos = inorderList.indexOf(root.val);
+        // 4. 左子树的范围是[0, pos)
+        root.left = buildTree2(preorder, inorderList.subList(0, pos));
+        // 5. 有字数的范围是[pos+1, size)
+        root.right = buildTree2(preorder, inorderList.subList(pos+1, inorderList.size()));
+        return root;
+    }
+
+    // 12. 将一个二叉树转换成一个由括号和整数组成的字符串。
+    StringBuffer StringBuffer = null;
+    public String tree2str(TreeNode t) {
+        // 0. 判断特殊情况
+        // 1. 创建一个String的可变对象用来追加字符串
+        StringBuffer = new StringBuffer();
+        if(t == null){
+            return "";
+        }
+        tree2str2(t);
+        StringBuffer.deleteCharAt(0);
+        StringBuffer.deleteCharAt(StringBuffer.length()-1);
+        return StringBuffer.toString();
+    }
+    public void tree2str2(TreeNode t){
+        if(t == null){
+            return ;
+        }
+        StringBuffer.append("(");
+        StringBuffer.append(t.val);
+        tree2str2(t.left);
+        // 2. 当左子树为空, 右子树非空时需要加上()
+        if(t.left == null && t.right != null){
+            StringBuffer.append("()");
+        }
+        tree2str2(t.right);
+        StringBuffer.append(")");
+    }
+
+    // 13. 非递归实现先序遍历
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        // 非递归的先序遍历和层序遍历差不多
+        if(root == null){
+            return res;
+        }
+        // 0. 判断特殊情况并先创建一个栈
+        Stack<TreeNode> stack = new Stack<>();
+        // 1. 将根节点入栈
+        stack.push(root);
+        // 2. 取出栈顶元素访问
+        while(!stack.isEmpty()){
+            TreeNode cur = stack.pop();
+            res.add(cur.val);
+            // 3. 并将该节点的右子树和左子树依次入栈
+            if(cur.right != null){
+                stack.push(cur.right);
+            }
+            if(cur.left != null){
+                stack.push(cur.left);
+            }
+        }
+        return res;
+    }
+
+    // 14. 非递归实现中序遍历
+    public List<Integer> inorderTraversal(TreeNode root) {
+        // 0. 判断特殊情况, 创建一个栈
+        List<Integer> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        // 1. 创建一个cur指向root
+        TreeNode cur = root;
+        // 2. cur 一路往左走, 遇到的节点都入栈
+        while(true){
+            while(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            // 2. 此处还需要判断左子树为空的情况
+            if(stack.isEmpty()){
+                break;
+            }
+            // 3. 直到遇见null, 则说明到达了树的最下面
+            // 4. 现在开始出栈
+            TreeNode top = stack.pop();
+            res.add(top.val);
+            // 5. cur 再去访问右子树
+            cur = top.right;
+        }
+        return res;
+    }
+
+    // 15. 非递归实现后序遍历
+    public List<Integer> postorderTraversal(TreeNode root) {
+        // 0. 判断特殊情况, 创建一个栈
+        List<Integer> res = new ArrayList<>();
+        if(root == null){
+            return res;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        // 1. 创建一个cur指向root
+        TreeNode cur = root;
+        TreeNode pre = null;
+        // 2. 让cur一直往left走并把一路上遇见的节点都入栈, 直到遇见null
+        while(true){
+            while(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            if(stack.isEmpty()){
+                break;
+            }
+            // 3. 遇到null后还需要判断该节点的右子树是不是空
+            //     `是空的话就可以访问该节点,
+            //     `如果不为空就要看看该右子树是不是访问过,
+            //        `没有访问过的话, 就需要回去执行2
+            //        `访问过的话就可以访问该节点了
+            TreeNode top = stack.peek();
+            if(top.right == null || pre == top.right){
+                //可以访问该节点
+                stack.pop();
+                res.add(top.val);
+                pre = top;
+            }else{
+                //继续让cur从右子树开始循环
+                cur = top.right;
+            }
+        }
+        return res;
+    }
 
     public static void main(String[] args) {
         TreeNode root = setTree();
