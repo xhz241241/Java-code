@@ -15,8 +15,10 @@ public class Main {
             }
             Arrays.sort(arr);
             long sum = 0;
-            for(int i = 3 * n - 2; i >= n; i = i - 2){
-                sum = sum + arr[i];
+            // 每组的中间数字的下标为
+            // arr.length - 2 * (i + 1)
+            for(int i = 0; i < n; i++){
+                sum = sum + arr[arr.length - 2 * (i+1)];
             }
             System.out.println(sum);
         }
