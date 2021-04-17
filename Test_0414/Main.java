@@ -33,6 +33,7 @@ public class Main {
         }
     }
 
+    //数组中出现次数超过一半的数字
     public int MoreThanHalfNum_Solution(int [] array) {
         if(array.length == 0){
             return 0;
@@ -55,5 +56,44 @@ public class Main {
             return array[array.length/2];
         }
         return 0;
+    }
+    //数组中出现次数超过一半的数字2
+    //如果有一个数字出现了超过数组一半的次数的话 就成这个数字为众数 其他的叫非众数
+    //我们遍历数组, 遇到一个众数和一个非众数就互相抵消, 最后剩下的一定是那个众数
+    public class Solution2 {
+        public int MoreThanHalfNum_Solution(int [] array) {
+            if(array == null){
+                return 0;
+            }
+            int res = array[0];
+            int times = 1;
+            for(int i = 1; i < array.length; i++){
+                //已经开始计数了, 接下来判断当前数字和前一个是否相同
+                if(times != 0){
+                    //当前数字和前一个相同, 众数计数器 +1
+                    if(array[i] == array[i-1]){
+                        times++;
+                    }else{
+                        //当前数字和前一个不同, 众数计数器 -1
+                        times--;
+                    }
+                }else{
+                    //times计数器为 0 说明有一个众数和一个非众数互相抵消了
+                    //就把当前数字设为新的众数
+                    res = array[i];
+                    times = 1;
+                }
+            }
+            int count = 0;
+            for(int i = 0; i < array.length; i++){
+                if(array[i] == res){
+                    count++;
+                }
+            }
+            if(count > array.length/2){
+                return res;
+            }
+            return 0;
+        }
     }
 }
