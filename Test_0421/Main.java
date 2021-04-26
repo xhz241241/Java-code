@@ -12,6 +12,8 @@ public class Main{
             int count = 0;
             for(int i = n; i >= 1; i--){
                 int tem = i;
+                //这里需要有一个临时变量
+                //分解到没有 5 为止
                 while(tem % 5 == 0){
                     count++;
                     tem = tem / 5;
