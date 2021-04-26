@@ -10,6 +10,7 @@ public class Main2 {
             if(x == 1 || y == 1){
                 return  1;
             }
+            //题目规定只能走右边和下边
             //返回从目的地的左边来的路线 + 从目的地上边来的路线
             return countWays(x-1, y) + countWays(x, y-1);
         }

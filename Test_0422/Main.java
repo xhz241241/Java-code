@@ -27,3 +27,24 @@ public class Main{
         }
     }
 }
+
+
+//import java.util.*;
+//
+//public class Main{
+//    public static void main(String[] args){
+//        Scanner sc = new Scanner(System.in);
+//        while(sc.hasNext()){
+//            int n = sc.nextInt();
+//            int left = 0;
+//            int right = 1;
+//            int sum = 0;
+//            while(n > right){
+//                sum = right + left;
+//                left = right;
+//                right = sum;
+//            }
+//            System.out.println(Math.min(right-n, n-left));
+//        }
+//    }
+//}
