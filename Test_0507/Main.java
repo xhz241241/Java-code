@@ -8,6 +8,7 @@ public class Main{
         Scanner sc = new Scanner(System.in);
         while(sc.hasNext()){
             int n = sc.nextInt();
+            //第 n 行有 2*n-1 个数就是 2*n-1 列
             int[][] arr = new int[n][n*2+1];
             //       1
             //     1 1 1
@@ -21,8 +22,10 @@ public class Main{
                 }
             }
             int res = -1;
-            //求第 n 行 在数组中处于第 n-1 行
+            //遍历第 n 行的每个数字 只需要从下标为 1 的数遍历到倒数第二个数即可
+            //因为第一个数和最后一个数是 1
             for(int i = 1; i < (n*2+1)-1; i++){
+                //求第 n 行 在数组中处于第 n-1 行
                 if(arr[n-1][i] % 2 == 0){
                     res = i;
                     break;
