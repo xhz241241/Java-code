@@ -40,6 +40,7 @@ public class Main2{
             }
         }
         //开始输出结果
+        //歌曲下标是从 1 开始的
         for(int i = 1; i <= n; i++){
             if(i != n){
                 System.out.print(i + " ");
