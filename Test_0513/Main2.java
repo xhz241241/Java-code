@@ -28,6 +28,7 @@ public class Main2{
         //根据该下标找字符并输出
         for(int i = 0; i < arr.length; i++){
             if(arr[i] == 0){
+                //此处输出的是字符串中下标为 i 的字符 不是 i
                 System.out.println(s.charAt(i));
                 return;
             }
