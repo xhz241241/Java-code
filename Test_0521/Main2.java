@@ -7,14 +7,14 @@ public class Main2{
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         while(sc.hasNext()){
-            long n = sc.nextLong();
+            int n = sc.nextInt();
             if(n == 0){
                 return;
             }
             System.out.println(help(n));
         }
     }
-    public static int help(long n){
+    public static int help(int n){
         int count = 0;
         //当一堆币被分成只剩下一个了 那么假币就是最后剩下的那个 不需要在比较了
         while(n >= 2){
